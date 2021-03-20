@@ -53,7 +53,7 @@ User.getAll = (result) => {
 User.updateById = (id, user, result) => {
   db.query(
     "UPDATE users SET Email = ?, Password = ? WHERE ID = ?",
-    [user.email, user.password, user.customerId, id],
+    [user.email, user.password, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -62,6 +62,7 @@ User.updateById = (id, user, result) => {
       }
 
       if (res.affectedRows == 0) {
+        console.log(res);
         // not found User with the id
         result({ kind: "not_found" }, null);
         return;

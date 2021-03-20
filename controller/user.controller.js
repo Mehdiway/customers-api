@@ -41,7 +41,7 @@ app.post("/", (req, res, next) => {
 });
 
 app.put("/:userId", (req, res, next) => {
-  const id = req.params.userId;
+  const id = parseInt(req.params.userId);
   const user = {
     email: req.body.email,
     password: req.body.password,
@@ -49,6 +49,7 @@ app.put("/:userId", (req, res, next) => {
   userModel.updateById(id, user, (err, result) => {
     if (err) {
       console.log("error PUT /users/id", err);
+      console.log(id, user);
       next(err);
       return;
     }

@@ -6,11 +6,13 @@ const app = express();
 
 const customerController = require("./controller/customer.controller");
 const ordersController = require("./controller/orders.controller");
+const userController = require("./controller/user.controller");
 
 app.use(express.json());
 
 app.use("/customers", customerController);
 app.use("/orders", ordersController);
+app.use("/users", userController);
 
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
