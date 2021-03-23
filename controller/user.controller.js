@@ -13,6 +13,27 @@ app.get("/", (req, res, next) => {
   });
 });
 
+app.post("/login", (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  userModel.findByEmail(email, (err, result) => {
+    if (err) {
+      console.log("error POST /users/login", err);
+      if (err.kind === "not_found") err.statusCode = 404;
+      next(err);
+      return;
+    }
+    console.log(result);
+    if (result.Email === email && result.Password === password) {
+      res.json(result);
+    } else {
+      console.log("Wrong username or password", result, email, password);
+      next("Wrong username or password");
+      return;
+    }
+  });
+});
+
 app.get("/:userId", (req, res, next) => {
   const id = req.params.userId;
   userModel.findById(id, (err, result) => {
